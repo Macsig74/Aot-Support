@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(printf 'node_modules/\\\\n.env\\\\ndata.json\\\\n')"
+    ]
+  }
+}
