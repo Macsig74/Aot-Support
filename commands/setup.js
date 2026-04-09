@@ -4,16 +4,17 @@ const {
   ActionRowBuilder,
   ButtonBuilder,
   ButtonStyle,
-  PermissionFlagsBits,
   ChannelType,
 } = require('discord.js');
+
+const ALLOWED_USERS = (process.env.SETUP_USERS || '').split(',').map(id => id.trim()).filter(Boolean);
 const { ORANGE, TICKET_TYPES } = require('../config');
 const storage = require('../utils/storage');
 
 const data = new SlashCommandBuilder()
   .setName('setup-tickets')
   .setDescription('Configure le panel de tickets dans un salon')
-  .setDefaultMemberPermissions(PermissionFlagsBits.Administrator)
+  .setDefaultMemberPermissions(0)
   .addChannelOption(opt =>
     opt
       .setName('salon')
@@ -69,6 +70,10 @@ const data = new SlashCommandBuilder()
   );
 
 async function execute(interaction) {
+  if (!ALLOWED_USERS.includes(interaction.user.id)) {
+    return interaction.reply({ content: 'Vous n\'êtes pas autorisé à utiliser cette commande.', ephemeral: true });
+  }
+
   await interaction.deferReply({ ephemeral: true });
 
   const channel = interaction.options.getChannel('salon');
