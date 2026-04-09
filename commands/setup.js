@@ -14,7 +14,6 @@ const storage = require('../utils/storage');
 const data = new SlashCommandBuilder()
   .setName('setup-tickets')
   .setDescription('Configure le panel de tickets dans un salon')
-  .setDefaultMemberPermissions(0)
   .addChannelOption(opt =>
     opt
       .setName('salon')
