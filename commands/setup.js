@@ -120,6 +120,15 @@ async function execute(interaction) {
     rows.push(new ActionRowBuilder().addComponents(buttons.slice(i, i + 5)));
   }
 
+  const botMember = await interaction.guild.members.fetchMe();
+  const perms = channel.permissionsFor(botMember);
+
+  if (!perms.has('SendMessages') || !perms.has('ViewChannel') || !perms.has('EmbedLinks')) {
+    return interaction.editReply({
+      content: `Le bot n'a pas les permissions nécessaires dans ${channel}. Vérifiez qu'il peut voir le salon, envoyer des messages et intégrer des liens.`,
+    });
+  }
+
   await channel.send({ embeds: [embed], components: rows });
   await interaction.editReply({ content: `Panel de tickets publié dans ${channel}.` });
 }
