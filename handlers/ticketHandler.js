@@ -64,7 +64,7 @@ async function handleTicketModalSubmit(interaction) {
 
   const existingTicket = interaction.guild.channels.cache.find(
     c => c.topic?.startsWith(`ticket:${interaction.user.id}:`) &&
-      (c.parentId === categoryId || c.parentId === config.closeCategoryId)
+      (c.parentId === config.highStaffCategoryId || c.parentId === config.lowStaffCategoryId)
   );
 
   if (existingTicket) {
