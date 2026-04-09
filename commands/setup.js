@@ -96,6 +96,7 @@ async function execute(interaction) {
       'Bienvenue sur le support du serveur **Attack on Titan**.\n\n' +
       'Sélectionnez la catégorie correspondant à votre situation en cliquant sur le bouton approprié ci-dessous.\n\n' +
       '**Appel Ban / Mute** — Contester une sanction reçue\n' +
+      '**Signalement** — Signaler un joueur\n' +
       '**Signalement de bug** — Signaler un problème technique\n' +
       '**Autres** — Toute autre demande'
     )

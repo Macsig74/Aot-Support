@@ -11,6 +11,16 @@ const TICKET_TYPES = {
       { customId: 'preuves', label: 'Preuves disponibles', style: 2, required: false, placeholder: 'Liens, captures d\'écran (facultatif)' },
     ],
   },
+  signalement: {
+    label: 'Signalement',
+    staffLevel: 'high',
+    fields: [
+      { customId: 'pseudo', label: 'Pseudo Minecraft', style: 1, required: true, placeholder: 'Votre pseudo exact sur le serveur' },
+      { customId: 'cible', label: 'Joueur signalé', style: 1, required: true, placeholder: 'Pseudo du joueur à signaler' },
+      { customId: 'raison', label: 'Raison du signalement', style: 2, required: true, placeholder: 'Décrivez les faits reprochés' },
+      { customId: 'preuves', label: 'Preuves disponibles', style: 2, required: false, placeholder: 'Liens, captures d\'écran (facultatif)' },
+    ],
+  },
   bugs: {
     label: 'Signalement de bug',
     staffLevel: 'low',
