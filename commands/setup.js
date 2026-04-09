@@ -97,7 +97,7 @@ async function execute(interaction) {
     .setColor(ORANGE)
     .setTitle('Support — AotSmp ')
     .setDescription(
-      'Bienvenue sur le support du serveur **Attack on Titan**.\n\n' +
+      'Bienvenue sur le support du serveur **Aot SMP**.\n\n' +
       'Sélectionnez la catégorie correspondant à votre situation en cliquant sur le bouton approprié ci-dessous.\n\n' +
       '**Appel Ban / Mute** — Contester une sanction reçue\n' +
       '**Signalement** — Signaler un joueur\n' +
