@@ -204,7 +204,8 @@ async function handleCloseModalSubmit(interaction) {
         .setTimestamp()
         .setFooter({ text: interaction.guild.name });
 
-      await owner.send({ embeds: [dmEmbed] }).catch(() => {});
+      const transcriptAttachment = await buildTranscriptAttachment(interaction.channel);
+      await owner.send({ embeds: [dmEmbed], files: [transcriptAttachment] }).catch(() => {});
     }
 
     await interaction.channel.permissionOverwrites.edit(ownerId, {
@@ -234,16 +235,14 @@ async function handleCloseModalSubmit(interaction) {
   await interaction.editReply({ content: 'Ticket fermé.' });
 }
 
-async function handleTranscript(interaction) {
-  await interaction.deferReply({ ephemeral: true });
-
+async function buildTranscriptAttachment(channel) {
   const messages = [];
   let lastId;
 
   while (true) {
     const options = { limit: 100 };
     if (lastId) options.before = lastId;
-    const batch = await interaction.channel.messages.fetch(options);
+    const batch = await channel.messages.fetch(options);
     if (batch.size === 0) break;
     messages.push(...batch.values());
     lastId = batch.last().id;
@@ -262,11 +261,15 @@ async function handleTranscript(interaction) {
     return `[${date}] ${msg.author.tag}: ${[content, extras].filter(Boolean).join(' ')}`;
   });
 
-  const text = `Transcript — ${interaction.channel.name}\n${'─'.repeat(60)}\n\n${lines.join('\n')}`;
-  const attachment = new AttachmentBuilder(Buffer.from(text, 'utf8'), {
-    name: `transcript-${interaction.channel.name}.txt`,
+  const text = `Transcript — ${channel.name}\n${'─'.repeat(60)}\n\n${lines.join('\n')}`;
+  return new AttachmentBuilder(Buffer.from(text, 'utf8'), {
+    name: `transcript-${channel.name}.txt`,
   });
+}
 
+async function handleTranscript(interaction) {
+  await interaction.deferReply({ ephemeral: true });
+  const attachment = await buildTranscriptAttachment(interaction.channel);
   await interaction.editReply({ files: [attachment] });
 }
 
