@@ -7,7 +7,7 @@ const {
   ChannelType,
 } = require('discord.js');
 
-const ALLOWED_USERS = (process.env.SETUP_USERS || '').split(',').map(id => id.trim()).filter(Boolean);
+const SETUP_ROLE = (process.env.SETUP_ROLE || '').trim();
 const { ORANGE, TICKET_TYPES } = require('../config');
 const storage = require('../utils/storage');
 
@@ -69,8 +69,8 @@ const data = new SlashCommandBuilder()
   );
 
 async function execute(interaction) {
-  if (!ALLOWED_USERS.includes(interaction.user.id)) {
-    return interaction.reply({ content: 'Vous n\'êtes pas autorisé à utiliser cette commande.', ephemeral: true });
+  if (SETUP_ROLE && !interaction.member.roles.cache.has(SETUP_ROLE)) {
+    return interaction.reply({ content: 'Vous n\'avez pas le rôle requis pour utiliser cette commande.', ephemeral: true });
   }
 
   await interaction.deferReply({ ephemeral: true });
